@@ -1,0 +1,137 @@
+\documentclass[10pt,graphics,aspectratio=169,table]{beamer}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\usetheme{metropolis}
+
+\title{Introduction to \LaTeX}
+\author{Jakob Krebs}
+\date{ESE 2019}
+\institute{NERD101 - ESE - ifsr - TU Dresden}
+
+\begin{document}
+\maketitle
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+\section{What ist \LaTeX?}
+\begin{frame}{What is \LaTeX}
+    \begin{itemize}
+        \item Typesetting tool developed by Donald Knuth
+        \item enables people to write Text and let the formatting be done by the computer
+        \item it is the defacto standart for scientific writing
+    \end{itemize}
+\end{frame}
+\section{Math mode}
+\begin{frame}[fragile]{Math mode}
+        \begin{equation}
+            \hat{y} = \begin{pmatrix}y_1 \\ \vdots \\ y_n \end{pmatrix}, \hat{y'} = \begin{pmatrix}y'_1 \\ \vdots \\ y'_n \end{pmatrix}, A \in \mathbb{R}^{n \times n}
+        \end{equation}
+    Try, doing this in word, pages or libreoffice
+\begin{lstlisting}
+\hat{y} = \begin{pmatrix}y_1 \\ \vdots \\ y_n \\
+\end{pmatrix}, \hat{y'} = \begin{pmatrix}y'_1 \\ \vdots \\
+y'_n \end{pmatrix}, A \in \mathbb{R}\^{n \times n}
+\end{lstlisting}
+\end{frame}
+
+\section{a simple document}
+\begin{frame}[fragile]{a simple document}
+\begin{lstlisting}
+\documentclass[12pt, letterpaper, twoside]{article}
+\usepackage[utf8]{inputenc}
+ 
+\title{this document}
+\author{this author}
+\date{ESE 2019}
+ 
+\begin{document}
+Lorem ipsum dolor sit. 
+\end{document}
+\end{lstlisting}
+\end{frame}
+
+\section{structuring a text}
+\begin{frame}[fragile]{structureing a text}
+    we can structure our text with sections and subsections.
+    a table of contents will be created for us
+    \begin{lstlisting}
+    \chapter
+    \section
+    \subsection
+    \subsubsection
+    \tableofcontents
+    \end{lstlisting}
+\end{frame}
+
+\section{presentations}
+\begin{frame}[fragile]{presentations with beamer}
+bla fasel laber
+\end{frame}
+
+\section{macros}
+\begin{frame}[fragile]{macros}
+No one whats to type this to create a matrix
+    \begin{lstlisting}
+    \begin{pmatrix} a & b \\ c & d \end{pmatrix}
+    \end{lstlisting}
+so we define a macro
+    \begin{lstlisting}
+\newcommand{\m}[1] {
+    \begin{pmatrix}
+    #1
+    \end{pmatrix}}
+    \end{lstlisting}
+and now we can type
+    \begin{lstlisting}
+    \m{a&b\\c&d}
+    \end{lstlisting}
+\end{frame}
+
+\section{reference management}
+\begin{frame}[fragile]{reference management with bibtex}
+    \begin{itemize}
+        \item it can be hard to keep track of all sources one used
+        \item referncing papers, articles or books can be hard
+        \item different standarts on referencing are confusing
+    \end{itemize}
+    \begin{lstlisting}
+@inbook{knuth,
+    author = "Donald E. Knuth",
+    title = "Fundamental Algorithms",
+    publisher = "Addison-Wesley",
+    year = "1973",
+    chapter = "1.2",
+    keywords  = "knuth,programming"
+}
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{including zour bibtex file}
+    \begin{lstlisting}
+\usepackage{biblatex}
+\addbibresource{sample.bib}
+    \end{lstlisting}
+
+now you just reference it in your text with
+
+ \begin{lstlisting}
+\cite{knuth}
+\end{lstlisting}
+and print your references at the end of your document
+\begin{lstlisting}
+\printbibliography
+\end{lstlisting}
+\end{frame}
+
+\section{useful tools and references}
+\begin{frame}{useful things}
+you will encounter problems like everywhere else
+\begin{itemize}
+    \item not knowing the command for a symbol \url{http://detexify.kirelabs.org}
+    \item simple manuals on \LaTeX topics \url{https://www.overleaf.com/learn/latex}
+    \item other problems $\implies$ the search engine of least distrust
+\end{itemize}
+\end{frame}
+\end{document}
