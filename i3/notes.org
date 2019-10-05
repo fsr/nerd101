@@ -1,0 +1,13 @@
+* difference tilling and floating window manager
+* only a window manager not a desktop envirement
+* desktop layouts
+** normal
+** tabbed
+** stacked
+** floating
+* scratch window
+* i3 control command
+* i3status with conky
+* config file
+* multi monitor
+* dmenu
