@@ -1,31 +1,35 @@
 \documentclass[10pt,graphics,aspectratio=169,table]{beamer}
 \usepackage{listings}
-\usepackage{hyperref}
 \usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{graphicx}
 \usetheme{metropolis}
-\title{Opening}
-\author{NERD101 Team}
+\usepackage{hyperref}
+
+\title{Nerd 101}
+\author{Nerd101 Team}
 \date{ESE 2019}
-\institute{NERD101 - ESE - ifsr - TU Dresden}
+\institute{NERD101 - TU Dresden}
 \titlegraphic{\hfill\includegraphics[height=1.25cm]{../logo}}
 \begin{document}
 \maketitle
 
 \begin{frame}{Timetable}
-    \begin{tabular}{lllll}
-        time  & E010            & PC-1                          & PC-2      & E023      \\
-        12:00 & Eduroam         & Windows Subsystem for Linux   &           &           \\
-        12:40 &                 &                               &           &Opening    \\
-        13:00 & i3              & Shell basics                  & SSH       &           \\
-        14:00 & \LaTeX          & modern shell tools            & suckless  &           \\
-        15:00 & Lightning Talks & Crypto Party                  &           &           \\
+    \begin{tabular}{|l|l|c|l|l|l|}
+        \hline
+        \textbf{time}  & \textbf{E010} & \textbf{E009} & \textbf{PC-1} & \textbf{PC-2} & \textbf{E023} \\ \hline
+        12:00 & Eduroam Setup   &\multirow{6}*{\rotatebox{90}{Linux Install Party}}& WSL Setup &                    &           \\ \cline{1-2}\cline{4-6}
+        12:40 &                 & &                              &                    & Opening   \\ \cline{1-2}\cline{4-6}\cline{1-2}\cline{4-6}
+        13:00 & suckless programs & & \LaTeX                        & SSH                &           \\ \cline{1-2}\cline{4-6}
+        14:00 & i3              & & Python                        & &           \\ \cline{1-2}\cline{4-6}
+        15:00 & \multirow{2}*{Cryptoparty} & & Shell basics                  & vim                & Lightning Talks          \\ \cline{1-1}\cline{4-6}
+        16:00 & &                       & & moderne Shelltools &           \\ \hline
     \end{tabular}
 \end{frame}
 
 \begin{frame}{Lightning Talks}
     \begin{itemize}
         \item tmux
-        \item vim
         \item chmod -x chmod
     \end{itemize}
 \end{frame}
