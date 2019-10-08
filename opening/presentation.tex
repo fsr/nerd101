@@ -3,6 +3,7 @@
 \usepackage{tabularx}
 \usepackage{multirow}
 \usepackage{graphicx}
+\usepackage{booktabs}
 \usetheme{metropolis}
 \usepackage{hyperref}
 
@@ -15,45 +16,70 @@
 \maketitle
 
 \begin{frame}{Timetable}
+    \aboverulesep=0ex
+    \belowrulesep=0ex
     \begin{tabular}{|l|l|c|l|l|l|}
-        \hline
-        \textbf{time}  & \textbf{E010} & \textbf{E009} & \textbf{PC-1} & \textbf{PC-2} & \textbf{E023} \\ \hline
-        12:00 & Eduroam Setup   &\multirow{6}*{\rotatebox{90}{Linux Install Party}}& WSL Setup &                    &           \\ \cline{1-2}\cline{4-6}
-        12:40 &                 & &                              &                    & Opening   \\ \cline{1-2}\cline{4-6}\cline{1-2}\cline{4-6}
-        13:00 & suckless programs & & \LaTeX                        & SSH                &           \\ \cline{1-2}\cline{4-6}
-        14:00 & i3              & & Python                        & &           \\ \cline{1-2}\cline{4-6}
-        15:00 & \multirow{2}*{Cryptoparty} & & Shell basics                  & vim                & Lightning Talks          \\ \cline{1-1}\cline{4-6}
-        16:00 & &                       & & moderne Shelltools &           \\ \hline
+        \midrule
+        \textbf{time}  & \textbf{E010} & \textbf{E009} & \textbf{PC-1} & \textbf{PC-2} & \textbf{E023} \\ \midrule
+        12:00 & Eduroam Setup   &\multirow{6}*{\rotatebox{90}{\only<1-1>{Linux Install Party}\only<2->{\textbf{Linux Install Party}}\ }}& WSL Setup & & \\ \cmidrule{1-2}\cmidrule{4-6}
+        12:40 & & & & & \alert{Opening} \\ \cmidrule{1-2}\cmidrule{4-6}\morecmidrules\cmidrule{1-2}\cmidrule{4-6}
+        13:00 & suckless programs & & {\fontfamily{cmr}\selectfont \LaTeX} & SSH & \\ \cmidrule{1-2}\cmidrule{4-6}
+        14:00 & i3 & & Python & & \\ \cmidrule{1-2}\cmidrule{4-6}
+        15:00 & \only<1-2>{Cryptoparty}\only<3->{\textbf{Cryptoparty}} & & Shell basics & vim & \only<1-2>{Lightning Talks}\only<3->{\textbf{Lightning Talks}} \\ \cmidrule{1-1}\cmidrule{4-6}
+        16:00 & & & & modern shelltools & \\ \midrule
     \end{tabular}
 \end{frame}
 
-\begin{frame}{Lightning Talks}
-    \begin{itemize}
-        \item tmux
-        \item chmod -x chmod
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Rooms}
-    todo
-\end{frame}
-
 \begin{frame}{Linux Install Party}
-    \alert{You want to use a gnu+Linux Operating System? - We will help with the Install!}
-    We are ready to help with the following Distributions:
+    \centering \LARGE \textbf{You want to use a GNU+Linux Operating System?}
+
+    \footnotesize Or just try it out -- no pressure.
+
+    \vspace{1cm}
+
+    \large \alert{We'll help you with the installation!}
+    \vfill
+    \pause{}
+
+    \normalsize We are prepared to help with the following Distributions:
+    \begin{columns}[onlytextwidth]
+        \begin{column}{.4\textwidth}
+            \flushright
+                Debian\\
+                Arch Linux\\
+                NixOS
+        \end{column}
+        \begin{column}{.2\textwidth}\end{column}
+        \begin{column}{.4\textwidth}
+            \flushleft
+                Ubuntu\\
+                Manjaro
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Lightning Talks}
+    Short, funny and enlightening talks about the following topics:
     \begin{itemize}
-        \item Debian
-        \item Arch Linux
-        \item NixOS
-        \item Ubuntu
-        \item Manjaro
+        \item \texttt{tmux} -- \emph{How to use terminals via SSH like a pro}
+        \item \texttt{chmod -x chmod} -- \emph{How to recover from the worlds oldest joke}
     \end{itemize}
 \end{frame}
+
+% \begin{frame}{Rooms}
+%     todo
+% \end{frame}
+
 
 \begin{frame}{Crypto Party}
-    \alert{Why should I encrypt my Messages?}
-    \alert{How do I encrypt my Messages?}
-    You will find the anwser in our CryptoParty.
+    \centering \Large \textbf{Why should I encrypt my Messages?}
+
+    \pause{}
+    \textbf{How do I encrypt my Messages?}
+
+    \vspace{.5cm}
+    \pause{}
+    \alert{You will find the anwser at our Cryptoparty.}
 \end{frame}
 
 \end{document}
