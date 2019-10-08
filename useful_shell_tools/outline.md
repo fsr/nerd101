@@ -13,3 +13,7 @@
 * fish
 * youtube-dl
 * hub
+* cowsay
+* lolcat
+* sshuttle
+
