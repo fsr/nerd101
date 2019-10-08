@@ -40,7 +40,6 @@ y'_n \end{pmatrix}, A \in \mathbb{R}\^{n \times n}
 \begin{frame}[fragile]{a simple document}
 \begin{lstlisting}[language=tex]
 \documentclass[12pt, letterpaper, twoside]{article}
-\usepackage[utf8]{inputenc}
  
 \title{this document}
 \author{this author}
@@ -67,7 +66,14 @@ Lorem ipsum dolor sit.
 
 \section{presentations}
 \begin{frame}[fragile]{presentations with beamer}
-bla fasel laber
+\begin{lstlisting}[language=TeX]
+    \documentclass[10pt,graphics,aspectratio=169,table]{beamer}
+    \usetheme{metropolis}
+    [...]
+    \\begin{frame}{mySlide}
+    slide content
+    \\end{frame}
+\end{lstlisting}
 \end{frame}
 
 \section{macros}
