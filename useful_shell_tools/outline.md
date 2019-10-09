@@ -17,5 +17,8 @@
 * lolcat
 * sshuttle
 * ncdu
-* 
+* sl
+* gti
+* sshfs
+*  
 
