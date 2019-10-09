@@ -3,12 +3,12 @@
 * half a hour
 * we will present useful shell tools
 === Tools ===
-* tmux
+* ripgrep
 * ranger
 * progress 
 * tldr
 * fzf
-* aria2c
+* aria2
 * fortune/wisdom
 * fish
 * youtube-dl
@@ -16,4 +16,6 @@
 * cowsay
 * lolcat
 * sshuttle
+* ncdu
+* 
 
