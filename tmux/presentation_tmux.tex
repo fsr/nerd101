@@ -1,0 +1,94 @@
+\documentclass[10pt,graphics,aspectratio=169,table]{beamer}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\usetheme{metropolis}
+\title{tmux}
+\subtitle{For all the people with more than one terminal}
+\author{Jannusch Bigge}
+\titlegraphic{\hfill\includegraphics[height=1.25cm]{../logo}}
+\begin{document}
+\begin{frame}
+    \maketitle
+\end{frame}
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+\begin{frame}{Basics}
+    \section{Basics}
+\end{frame}
+
+\begin{frame}{Basics}
+    \begin{itemize}
+        \item \textbf{t}erminal \textbf{mu}ltiple\textbf{x}er
+        \item enable running a number of terminals in one screen
+        \item ISC licensed
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{How to tmux}
+    \section{How to tmux}
+\end{frame}
+
+\begin{frame}{How to tmux: basics}
+    Controllkey: Ctr + b
+    \begin{itemize}
+        \item new window: c
+        \item close current window: \&
+        \item rename current window: ,
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{How to tmux: navigation}
+    Controllkey: Ctr + b
+    \begin{itemize}
+        \item list all windows: w
+        \item next window: n
+        \item previous window: 
+        \item select by number: 0..9
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{How to tmux: panes}
+    Controllkey: Ctr + b
+    \begin{itemize}
+        \item split vertically: \%
+        \item split horizontally: "
+        \item move with arrows: $\rightarrow \leftarrow \uparrow \downarrow$
+        \item convert pane into window: !
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{How to tmux: copy mode}
+Controllkey: Ctr + b
+\begin{itemize}
+    \item enter copy mode: [
+    \item enter copy mode and scroll up: PgUp
+\end{itemize}
+\end{frame}
+
+\begin{frame}{How to tmux: copy mode}
+\begin{itemize}
+    \item quite: q
+    \item top line: g
+    \item bottom line: G
+    \item scroll up / down: $\uparrow / \downarrow$
+    \item move cursor: vim (h,j,k,l)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{How to tmux: command mode}
+Ctrl + b + :
+
+Important commands:
+\begin{itemize}
+    \item detach others on the session: attach -d
+    \item new session : new
+    \item swap-window -s 2 -t 1 (window 2 and window 1)
+\end{itemize}
+    
+\end{frame}
+\end{document}
