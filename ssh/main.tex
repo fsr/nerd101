@@ -1,0 +1,247 @@
+\documentclass[10pt,graphics,aspectratio=169,table]{beamer}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{textcomp}
+\usetheme{metropolis}
+
+\definecolor{lbcolor}{rgb}{0,0,0}
+\lstset{
+basicstyle=\ttfamily\color{white},
+backgroundcolor=\color{lbcolor},
+literate={~} {$\sim$}{1},
+}
+\renewcommand{\bibsection}{}
+
+\title{SSH - Secure Shell}
+\author{Jakob Krebs und Viktor Reusch}
+\date{ESE 2019}
+\institute{NERD101 - ESE - ifsr - TU Dresden}
+
+\titlegraphic{\hfill\includegraphics[height=1.25cm]{../logo}}
+\begin{document}
+\maketitle
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+\section{SSH}
+\begin{frame}{Motivation}
+\begin{columns}
+    \column{0.5\textwidth}
+        Reasons for servers:
+        \begin{itemize}
+            \item Uptime
+            \item Location
+            \item Compute Power
+            \item Connectivity
+        \end{itemize}
+        How to use the shell on these Servers?
+    \column{0.5\textwidth}
+        \includegraphics[width=\textwidth]{img/servers.jpg} \cite{servers}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Connecting to Server}
+\begin{lstlisting}
+me@my_machine:~ $ ssh remote_user@example.com
+remote_user@example.com's password:
+remote_user@example:~ $
+\end{lstlisting}
+
+If the SSH server is not on port 22:
+\begin{lstlisting}
+me@my_machine:~ $ ssh -p 1234 remote_user@example.com
+\end{lstlisting}
+
+For more options:
+\begin{lstlisting}
+$ man ssh
+\end{lstlisting}
+\end{frame}
+
+\section{Keyfiles}
+\begin{frame}[fragile]{Keyfiles}
+\begin{columns}
+    \column{0.6\textwidth}
+        Why do I need keyfiles?
+        \begin{itemize}
+            \item Security
+            \item Laziness
+        \end{itemize}
+        Generate key:
+        \begin{lstlisting}
+$ ssh-keygen -t ed25519 -C me@mypc
+        \end{lstlisting}
+        \begin{lstlisting}
+$ ssh-keygen -b 4096 -t rsa
+        \end{lstlisting}
+        Copy public key to server:
+        \begin{lstlisting}
+$ ssh-copy-id my@example.com
+        \end{lstlisting}
+        Now you can log in without password.
+    \column{0.4\textwidth}
+        Resulting \textit{$\sim$/.ssh/id\_ed25519.pub}:
+        \begin{lstlisting}
+ssh-ed25519 AAAAC3NzaC1lZ
+DI1NTE5AAAAIJDzhzcMdEg7Nz
+wwgB0bdOP1pDSKv5fsN4l4q8Y
+ysLLX viktor@nerd101
+        \end{lstlisting}
+\end{columns}
+\end{frame}
+
+\section{ProxyJump}
+\begin{frame}[fragile]{ProxyJump}
+Connect to a not directly accessible server:
+\begin{lstlisting}
+$ ssh -J firewall.example.org:22 server.example.org
+\end{lstlisting}
+\end{frame}
+
+\section{Proxy}
+\begin{frame}[fragile]{SOCKS Proxy}
+Use a server as a generaly \textit{SOCKS} proxy:
+\begin{lstlisting}
+$ ssh -D 1080 -N server.example.org
+\end{lstlisting}
+\textit{-N} can be used to not start a shell on the server.
+
+Use localhost with port 1080 in your proxy settings.
+\end{frame}
+
+
+\section{Port Forwardings}
+\begin{frame}
+\includegraphics[width=\textwidth]{img/tunnel.png} \cite{tunnel}
+\end{frame}
+
+\subsection{Local Portforwardings}
+\begin{frame}[fragile]{Local Portforwardings}
+You want to connect to a remote website (port 80), that is blocked by a firewall:
+\begin{lstlisting}
+$ ssh -L 8080:localhost:80 server.example.org
+$ ssh -L 8080:server.example.org:80 firewall.example.org
+\end{lstlisting}
+\end{frame}
+
+\subsection{Remote Portforwardings}
+\begin{frame}[fragile]{Remote Portforwardings}
+You want your local website to be accessible by another user of the server
+\begin{lstlisting}
+$ ssh -R 8080:localhost:80 server.example.org
+\end{lstlisting}
+\end{frame}
+
+\section{Config File}
+\begin{frame}[fragile]{why use a config file?}
+You are to lazy to type the aweful long SSH commands?
+\begin{lstlisting}
+$ ssh long_user_name@long.nasty.server.name -p 9999
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Config File}
+instead you can write this into your \textit{$\sim$/.ssh/config} file
+\begin{lstlisting}
+Host myserver
+Hostname long.nasty.server.name
+User long_user_name
+Port 9999
+ProxyJump firewall.example.com:22
+LocalForward 8201 localhost:8200
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Show applied Options}
+Show what options will get applied on a connection:
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{lstlisting}
+$ ssh -G switch-bu24.agdsn.network
+user jakob
+hostname switch-bu24.agdsn.network
+port 22
+[...]
+proxyjump login.agdsn.tu-dresden.de
+    \end{lstlisting}
+\end{column}
+    \begin{column}{0.5\textwidth}
+        \begin{lstlisting}
+Host switch-bu24.agdsn.network
+User jakob
+Host *
+IdentitiesOnly yes
+ControlMaster auto
+ControlPersist 60s
+Host login.agdsn.tu-dresden.de
+ProxyCommand none
+Hostname 141.76.119.134
+Host *.agdsn *.agdsn.network
+ProxyJump login.agdsn.tu-dresden.de
+IdentityFile ~/.ssh/id_ed25519
+        \end{lstlisting}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Reuse Connections}
+Having multiple connections from your machine to a single server (e.g. in Robolab).
+
+How can I reuse my first connection?
+\begin{lstlisting}
+Host *
+ControlMaster auto
+ControlPath ~/.ssh/sockets/%r@%h-%p
+ControlPersist 600
+\end{lstlisting}
+\end{frame}
+
+\section{Copying Files}
+\begin{frame}[fragile]{SCP}
+How to copy a file from or to a server?
+\begin{lstlisting}
+$ scp /file/on/my/machine remote_user@server:/destination
+\end{lstlisting}
+And a directory?
+\begin{lstlisting}
+$ scp -r /my/directory/ remote_user@server:/destination/
+\end{lstlisting}
+Also uses your SSH config.
+\end{frame}
+
+\begin{frame}[fragile]{SFTP}
+\begin{itemize}
+    \item more elaborate operations (e.g. rename, deletion)
+    \item opens a session for multiple operations
+    \item has many graphical user interfaces
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{img/filezilla.png} \cite{filezilla}
+\end{center}
+\end{frame}
+
+\section{Windows}
+\begin{frame}[fragile]{Help! I am using Windows.}
+\begin{columns}
+    \column{0.5\textwidth}
+        \begin{itemize}
+            \item Install Linux
+            \item Ports of SSH in \textit{Git for Windows}
+            \item WSL
+            \item Cross-platform SSH clients (e.g. \textit{PuTTY})
+        \end{itemize}
+    \column{0.5\textwidth}
+        \includegraphics[height=0.7\paperheight]{img/putty.png} \cite{putty}
+\end{columns}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+        \frametitle{References}
+        \bibliographystyle{ieeetr}
+        \nocite{*}
+        \bibliography{ref}
+\end{frame}
+
+\end{document}
