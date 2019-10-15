@@ -3,6 +3,7 @@
 * half a hour
 * we will present useful shell tools
 === Tools ===
+* mosh
 * ripgrep
 * ranger
 * progress 
