@@ -12,3 +12,10 @@ The were built in the state presented in 2019.
 * [Suckless](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-suckless.pdf)
 * [tmux](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-tmux.pdf)
 * [Windows Subsystem for Linux](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-wsl.pdf)
+
+## License
+The Contents of this repository are licensed under the Creative Commons License CC-BY-SA-NC 4.0.
+
+## Acknowledgements
+
+* The License was copied from [Creative-Commons-Markdown](https://github.com/idleberg/Creative-Commons-Markdown) 
