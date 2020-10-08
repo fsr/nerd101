@@ -18,7 +18,7 @@ literate={~} {$\sim$}{1},
 
 \title{SSH - Secure Shell}
 \author{Jakob Krebs und Viktor Reusch}
-\date{ESE 2019}
+\date{ESE \the\year{}}
 \institute{NERD101 - ESE - ifsr - TU Dresden}
 
 \titlegraphic{\hfill\includegraphics[height=1.25cm]{../logo}}
@@ -143,7 +143,7 @@ ysLLX viktor@nerd101
 \begin{frame}[fragile]{ProxyJump}
 	Connect to a not directly accessible server:
 	\begin{lstlisting}
-$ ssh -J firewall.example.org:22 server.example.org
+$ ssh -J proxy.example.org:22 server.example.org
 	\end{lstlisting}
 	\begin{center}
 		\includegraphics[width=0.7\textwidth]{img/proxy.png} \cite{proxy}
@@ -176,7 +176,7 @@ $ ssh -L 8080:server.example.org:80 firewall.example.org
 \begin{frame}[fragile]{Remote Portforwarding}
 	Make your local website accessible by programs on the server.
 	\begin{lstlisting}
-$ ssh -R 8080:localhost:80 server.example.org
+$ ssh -R 80:localhost:8080 server.example.org
 	\end{lstlisting}
 \end{frame}
 
@@ -197,6 +197,11 @@ User long_user_name
 Port 9999
 ProxyJump firewall.example.com:22
 LocalForward 8201 localhost:8200
+	\end{lstlisting}
+	
+	Usage:
+	\begin{lstlisting}
+$ ssh myserver
 	\end{lstlisting}
 \end{frame}
 
