@@ -2,8 +2,9 @@
 
 ## Slides
 pdf builds of the slides are available here.
-The were built in the state presented in 2019.
-
+### 2020
+* [SSH](https://users.ifsr.de/~krebs/ese20/nerd101-ssh.pdf)
+### 2019
 * [How to recover from chmod -x chmod](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-chmod.pdf)
 * [LaTeX](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-latex.pdf)
 * [Opening](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-opening.pdf)
