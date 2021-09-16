@@ -7,11 +7,16 @@
 \usepackage{menukeys}
 \usetheme{metropolis}
 
-\definecolor{lbcolor}{rgb}{0,0,0}
+\lstdefinelanguage{shell}{
+	morekeywords={\$},
+	keywordstyle={\color{red!50!orange}}
+}
 \lstset{
-	basicstyle=\small\ttfamily\color{white},
-	backgroundcolor=\color{lbcolor},
-	literate={~} {$\sim$}{1},
+	basicstyle={\small\ttfamily},
+	backgroundcolor={\color{green!10!white}},
+	frame={trBL},
+	literate={~}{$\sim$}{1},
+	language={shell}
 }
 \addbibresource{ref.bib}
 
