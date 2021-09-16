@@ -1,18 +1,19 @@
 \documentclass[10pt,graphics,aspectratio=169,table]{beamer}
 \usepackage{listings}
 \usepackage{hyperref}
-\usepackage[numbers]{natbib}
+\usepackage[style=numeric]{biblatex}
+\usepackage[url=true, license=full]{biblatex-license}
 \usepackage{textcomp}
 \usepackage{menukeys}
 \usetheme{metropolis}
 
 \definecolor{lbcolor}{rgb}{0,0,0}
 \lstset{
-basicstyle=\small\ttfamily\color{white},
-backgroundcolor=\color{lbcolor},
-literate={~} {$\sim$}{1},
+	basicstyle=\small\ttfamily\color{white},
+	backgroundcolor=\color{lbcolor},
+	literate={~} {$\sim$}{1},
 }
-\renewcommand{\bibsection}{}
+\addbibresource{ref.bib}
 
 \newcommand{\ra}{$\Rightarrow$\ }
 
@@ -286,11 +287,9 @@ $ scp -r /my/directory/ remote_user@server:/destination/
 \end{columns}
 \end{frame}
 
+\section{References}
 \begin{frame}[allowframebreaks]
-	\frametitle{References}
-	\bibliographystyle{ieeetr}
-	\nocite{*}
-	\bibliography{ref}
+	\printbibliography[heading=none]
 \end{frame}
 
 \end{document}
