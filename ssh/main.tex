@@ -5,11 +5,14 @@
 \usepackage[url=true, license=full]{biblatex-license}
 \usepackage{textcomp}
 \usepackage{menukeys}
+% Various underlinings
+\usepackage[normalem]{ulem}
 
 % -- Change to this year's color! --
 \definecolor{ese}{RGB}{89, 71, 179}
 
 \newcommand{\ra}{$\Rightarrow$\ }
+\newcommand{\file}[1]{\dotuline{\texttt{#1}}}
 
 \usetheme{metropolis}
 \lstdefinelanguage{shell}{
@@ -27,7 +30,7 @@
 \addbibresource{ref.bib}
 
 \title{SSH - Secure Shell}
-\author{Jakob Krebs und Viktor Reusch}
+\author{\underline{Viktor Reusch} und Jakob Krebs}
 \date{ESE \the\year{}}
 \institute{Nerd::101 - ESE - ifsr - TU Dresden}
 \titlegraphic{\hfill\includegraphics[height=2cm]{../logo}}
@@ -46,10 +49,10 @@
 	\column{0.55\textwidth}
 		\emph{Servers are versatile.}
 		\begin{itemize}
-			\item Uptime \ra Build a Website
-			\item Location \ra Bypass Firewalls
-			\item Compute Power \ra Run a Simulation
-			\item Connectivity \ra Host a Game Server
+			\item Uptime \ra Build a website
+			\item Location \ra Bypass firewalls
+			\item Compute power \ra Run a simulation
+			\item Connectivity \ra Host a game server
 		\end{itemize}
 		\onslide<2->{\textbf{How do you securely control a server remotely?}}
 	\column{0.45\textwidth}
@@ -62,11 +65,11 @@
 \begin{frame}{Overview}
 	\textbf{SSH solves this problem.}
 	\begin{itemize}
-		\item Encrypted Network Connection
-		\item Replaces insecure Telnet
-		\item Remote Command-Line Interface
-		\item Proxy and Port Forwarding
-		\item File Transfer
+		\item Encrypted network connection
+		\item Replaces insecure \emph{Telnet}
+		\item Remote command-line interface
+		\item Proxy and port forwarding
+		\item File transfer
 	\end{itemize}
 \end{frame}
 
@@ -100,7 +103,8 @@ Are you sure you want to continue connecting (yes/no)?
 	\end{lstlisting}
 	\pause
 
-	\emph{Asymmetric cryptography with public and private server keys.}
+	\emph{Asymmetric cryptography with public and private server keys.} \\
+	Server keys are yet unknown.
 	\pause
 
 	Check fingerprint through a server control panel or with:
@@ -108,6 +112,13 @@ Are you sure you want to continue connecting (yes/no)?
 remote@example:~ $ ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub
 256 SHA256:R[...]3 root@example (ED25519)
 	\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Alternative: YOLO Security}
+	\centering
+	\textbf{\emph{TOFU} -- Trust on first use}
+
+	\includegraphics[height=0.65\paperheight]{img/tofu.jpg} \cite{tofu}
 \end{frame}
 
 \begin{frame}[fragile]{Terminate a Connection}
@@ -144,7 +155,7 @@ $ ssh-keygen -b 4096 -t rsa
 		\end{lstlisting}
 
 		\begin{onlyenv}<3->
-			Copy your \emph{public key} to a server: \textit{$\sim$/.ssh/authorized\_keys}
+			Copy your \emph{public key} to a server: \file{$\sim$/.ssh/authorized\_keys}
 			\begin{lstlisting}
 $ ssh-copy-id my@example.com
 			\end{lstlisting}
@@ -152,7 +163,7 @@ $ ssh-copy-id my@example.com
 		\end{onlyenv}
 
 	\column{0.4\textwidth}
-		Resulting \textit{$\sim$/.ssh/id\_ed25519.pub}:
+		Resulting \file{$\sim$/.ssh/id\_ed25519.pub}:
 		\begin{lstlisting}
 ssh-ed25519 AAAAC3NzaC1lZ
 DI1NTE5AAAAIJDzhzcMdEg7Nz
@@ -212,7 +223,7 @@ $ ssh long_user_name@long.nasty.server.name -p 9999
 \end{frame}
 
 \begin{frame}[fragile]{Config File}
-	Configure an alias for your connection in the \textit{$\sim$/.ssh/config} file:
+	Configure an alias for your connection in the \file{$\sim$/.ssh/config} file:
 	\begin{lstlisting}
 Host myserver
 Hostname long.nasty.server.name
@@ -259,7 +270,7 @@ IdentityFile ~/.ssh/id_ed25519
 \end{frame}
 
 \begin{frame}[fragile]{Reuse Connections}
-	Multiple connections to a singe server is inefficient (e.g. in Robolab).
+	Multiple connections to a singe server is inefficient (e.g. in \emph{Robolab}).
 	\pause
 
 	\textbf{How can you use a single connection for multiple sessions?}
@@ -313,9 +324,9 @@ $ scp -r /my/directory/ remote_user@server:/destination/
 	\column{0.5\textwidth}
 		\begin{itemize}
 			\item Install Linux
-			\item Port of SSH in \textit{Git for Windows}
-			\item Windows Subsystem for Linux
-			\item Cross-platform SSH clients (e.g. \textit{PuTTY})
+			\item Port of SSH in \emph{Git for Windows}
+			\item \emph{Windows Subsystem for Linux}
+			\item Cross-platform SSH clients (e.g. \emph{PuTTY})
 		\end{itemize}
 	\column{0.5\textwidth}
 		\centering
