@@ -13,7 +13,8 @@ pdf builds of the slides are available here.
 * [Suckless](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-suckless.pdf)
 * [tmux](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-tmux.pdf)
 * [Windows Subsystem for Linux](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-wsl.pdf)
-
+### 2022
+* [Coffee101](/coffee101/coffee101-1.pdf)
 ## License
 The Contents of this repository are licensed under the Creative Commons License CC-BY-SA-NC 4.0.
 
