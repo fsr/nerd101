@@ -1,0 +1,290 @@
+\documentclass[10pt, graphics, aspectratio=169, table]{beamer}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage[normalem]{ulem}
+\usepackage[flushleft]{threeparttable}
+
+% -- Change to this year's color! --
+\definecolor{ese}{RGB}{58, 240, 212}
+\newcommand{\ra}{$\Rightarrow$\ }
+
+\usetheme{metropolis}
+\setbeamercolor{frametitle}{bg=ese}
+
+\title{Git - version control system}
+\author{Armin Wolf}
+\date{ESE \the\year{}}
+\institute{Nerd::101 - ESE - IFSR - TU Dresden}
+\titlegraphic{\hfill\includegraphics[height=2cm]{../logo}}
+
+\begin{document}
+    \maketitle
+
+    \begin{frame}{Outline}
+        \tableofcontents
+    \end{frame}
+
+
+    \section{Introduction}
+    \begin{frame}{Why using a version control system?}
+        \begin{columns}
+            \column{0.55\textwidth}
+                \emph{Developing programs is chaotic}
+                \begin{itemize}
+                    \item multiple features to track
+                    \item multiple releases to support
+                    \item multiple developers to manage
+                    \item need for rolling back buggy code changes
+                    \item \ldots
+                \end{itemize}
+                \textbf{All possible with a version control system}
+            \column{0.45\textwidth}
+                \includegraphics[width=\textwidth]{img/chaos.png}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Git}
+        \begin{columns}
+            \column{0.55\textwidth}
+                Enter: \textbf{Git}
+                \begin{itemize}
+                    \item multiple workflows \ra feature development, bugfix, \ldots
+                    \item language-agnostic \ra wide range of use-cases
+                    \item distributed \ra easy to collaborate
+                    \item \textbf{open source}
+                \end{itemize}
+            \column{0.45\textwidth}
+                \center\includegraphics[scale=0.4]{img/git.png}
+                \center\tiny\url{https://xkcd.com/1597}
+        \end{columns}
+    \end{frame}
+
+
+    \section{Basic Concepts}
+    \begin{frame}{Repository}
+        \begin{columns}
+            \column{0.55\textwidth}
+                \begin{itemize}
+                    \item contains all files monitored by Git
+                    \item holds the commit histroy (more later)
+                    \item can be local or remote
+                \end{itemize}
+            \column{0.45\textwidth}
+                \center\includegraphics[scale=0.4]{img/repo.png}
+                \center\tiny\url{https://www.atlassian.com/de/git/tutorials/setting-up-a-repository/git-clone}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Repository commands}
+        \begin{table}
+            \centering
+            \begin{threeparttable}
+                \begin{tabular}{ll}
+                    \toprule
+                    Command & Function \\
+                    \midrule
+                    \texttt{git init <name>} & Creates a new repository \\
+                    \texttt{git clone <url>} & Creates a working copy of a remote repository \\
+                    \texttt{git status} & Shows the current status of the repository\tnote{1} \\
+                    \texttt{git add <file>} & Adds the file \texttt{<file>} to the repository\tnote{1}\\
+                    \bottomrule
+                \end{tabular}
+                \begin{tablenotes}
+                    \item [1]\emph{should be executed inside the repository}
+                \end{tablenotes}
+            \end{threeparttable}
+        \end{table}
+    \end{frame}
+
+    \begin{frame}{Staging area}
+        \begin{columns}
+            \column{0.55\textwidth}
+                \begin{itemize}
+                    \item contains all changes destined ("staged") for commit
+                    \item allows for breaking up bigger changes into multiple small commits
+                    \item simplifies review and management of complex changes
+                \end{itemize}
+            \column{0.45\textwidth}
+                \center\includegraphics[scale=0.18]{img/staging.png}
+                \center\tiny\url{https://codetej.in/3-git-three-stage-architecture/}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Staging area commands}
+        \begin{table}
+            \centering
+            \begin{threeparttable}
+                \begin{tabular}{ll}
+                    \toprule
+                    Command & Function \\
+                    \midrule
+                    \texttt{git add <file>} & Stages all changes made to file \texttt{<file>}\tnote{1} \\
+                    \texttt{git diff HEAD} & Shows all changes to files inside the repository\tnote{1} \\
+                    \texttt{git diff HEAD --cached} & Shows all changes staged for commit\tnote{1} \\
+                    \texttt{git restore <file>} & Removes all unstaged changes made to file \texttt{<file>}\tnote{1}\\
+                    \texttt{git restore --staged <file>} & Unstages all staged changes made to file \texttt{<file>}\tnote{1}\\
+                    \bottomrule
+                \end{tabular}
+                \begin{tablenotes}
+                    \item [1]\emph{should be executed inside the repository}
+                \end{tablenotes}
+            \end{threeparttable}
+        \end{table}
+    \end{frame}
+
+    \begin{frame}{Commits}
+        \begin{columns}
+            \column{0.55\textwidth}
+                \begin{itemize}
+                    \item set of changes, shows up inside commit history
+                    \item contains a topic and description
+                    \item ideally self-contained and not too large
+                    \item contains a hash sum as an unique identifier
+                    \item latest commit is aliased with "HEAD"
+                    \item can be reverted
+                \end{itemize}
+            \column{0.45\textwidth}
+                \center\includegraphics[scale=0.5]{img/commits.png}
+                \center\tiny\url{https://www.w3docs.com/learn-git/git-commit-amend.html}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Commits commands}
+        \begin{table}
+            \centering
+            \begin{threeparttable}
+                \begin{tabular}{ll}
+                    \toprule
+                    Command & Function \\
+                    \midrule
+                    \texttt{git commit} & Commits all staged changes\tnote{1} \\
+                    \texttt{git commit <file>} & Commits all staged changes of file \texttt{<file>}\tnote{1} \\
+                    \texttt{git commit --amend} & Ammends the staged changes to the latest commit\tnote{1} \\
+                    \texttt{git revert <hash>} & Reverts the commit refered to with \texttt{<hash>}\tnote{1} \\
+                    \texttt{git log} & Shows the commit history\tnote{1} \\
+                    \texttt{git show <hash>} & Shows the changes contained in commit \texttt{<hash>}\tnote{1} \\
+                    \bottomrule
+                \end{tabular}
+                \begin{tablenotes}
+                    \item [1]\emph{should be executed inside the repository}
+                \end{tablenotes}
+            \end{threeparttable}
+        \end{table}
+    \end{frame}
+
+    \begin{frame}{Branches}
+        \begin{columns}
+            \column{0.55\textwidth}
+                \begin{itemize}
+                    \item different lines of development
+                    \item useful for developing features, bugfixes, \ldots
+                    \item main branch is called "master" or "main"
+                    \item each one contains its own commit history
+                    \item can be united ("merged") with other branches
+                \end{itemize}
+            \column{0.45\textwidth}
+                \center\includegraphics[scale=0.25]{img/branches.png}
+                \center\tiny\url{https://medium.com/@natetadesse4991/git-branches-and-merging-overview-17810959c28a}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Branches commands}
+        \begin{table}
+            \centering
+            \begin{threeparttable}
+                \begin{tabular}{ll}
+                    \toprule
+                    Command & Function \\
+                    \midrule
+                    \texttt{git switch <branch>} & Change current branch to \texttt{<branch>}\tnote{1} \\
+                    \texttt{git switch -c <branch>} & Creates and changes current branch to \texttt{<branch>}\tnote{1} \\
+                    \texttt{git branch} & Shows all branches\tnote{1} \\
+                    \texttt{git branch -d <branch>} & Deletes branch \texttt{<branch>}\tnote{1} \\
+                    \texttt{git merge <branch>} & Merges branch \texttt{<branch>} into current branch\tnote{1} \\
+                    \bottomrule
+                \end{tabular}
+                \begin{tablenotes}
+                    \item [1]\emph{should be executed inside the repository}
+                \end{tablenotes}
+            \end{threeparttable}
+        \end{table}
+    \end{frame}
+
+    \begin{frame}{Collaborating with others}
+        \begin{columns}
+            \column{0.55\textwidth}
+                \begin{itemize}
+                    \item git is designed to allow easy collaboration
+                    \item decentralized \ra forking is common
+                    \item usually involves a remote repository, which is then cloned by every collaborater
+                \end{itemize}
+            \column{0.45\textwidth}
+                \center\includegraphics[scale=0.3]{img/collaboration.png}
+                \center\tiny\url{https://www.atlassian.com/git/tutorials/comparing-workflows}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Collaboration commands}
+        \begin{table}
+            \centering
+            \begin{threeparttable}
+                \begin{tabular}{ll}
+                    \toprule
+                    Command & Function \\
+                    \midrule
+                    \texttt{git fetch} & Fetch new changes from remote repository\tnote{1} \\
+                    \texttt{git pull} & Merge changes from remote repository\tnote{1} \\
+                    \texttt{git push} & Upload current branch to remote repository\tnote{1} \\
+                    \texttt{git remote set-url origin <url>} & Sets new remote repository to \texttt{<url>}\tnote{1} \\
+                    \bottomrule
+                \end{tabular}
+                \begin{tablenotes}
+                    \item [1]\emph{should be executed inside the repository}
+                \end{tablenotes}
+            \end{threeparttable}
+        \end{table}
+    \end{frame}
+
+    \begin{frame}{Pitfalls}
+        \begin{columns}
+            \column{0.55\textwidth}
+                \begin{itemize}
+                    \item commits without a good description are difficult to manage
+                    \item commits should be self-contained, since they might be reorderd
+                    \item pull before pushing new changes, or else you might experience a merge conflict
+                    \item multiple conflicting changes to the same file can also result in a merge conflict
+                \end{itemize}
+            \column{0.45\textwidth}
+                \center\includegraphics[scale=0.45]{img/commit_msg.png}
+                \center\tiny\url{https://xkcd.com/1296/}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Merge conflict resolution}
+        \begin{itemize}
+            \item git will stop when it encounters a merge conflict
+            \item all conflicting changes are market with "==="
+            \item choose which version to keep, or combine the two versions
+            \item add the resolved file with \texttt{git add <file>}
+            \item if all files are clean, continue with \texttt{git merge --continue}
+        \end{itemize}
+    \end{frame}
+
+    \section{What to do next}
+    \begin{frame}{What to do next}
+        \begin{columns}
+            \column{0.55\textwidth}
+                \begin{itemize}
+                    \item download git at \url{https://git-scm.com/downloads}
+                    \item read the git documentation at \url{https://git-scm.com/docs}
+                    \item create an account on github, gitlab, \ldots
+                    \item clone a public repository and experiment or participate
+                    \item explore more advanced commands
+                \end{itemize}
+            \column{0.45\textwidth}
+                \center\includegraphics[scale=0.28]{img/hosting.png}
+                \center\tiny\url{https://codeburst.io/git-from-zero-to-hero-basics-9d8705f3b7dd}
+        \end{columns}
+    \end{frame}
+
+\end{document}
