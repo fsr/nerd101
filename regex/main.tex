@@ -1,9 +1,50 @@
+\PassOptionsToPackage{svgnames}{xcolor}
 \documentclass[10pt, graphics, aspectratio=169, table]{beamer}
+\usepackage[svgnames]{xcolor}
 \usepackage{hyperref}
 \usepackage{booktabs}
+\usepackage{listings}
+\usepackage{environ}
 \usepackage[normalem]{ulem}
 \input{../color.tex}
 
+% setup for highlighting matches in examples
+\newlength{\matchHeight}
+\newlength{\matchDepth}
+\newcommand{\invalidMatch}[2]{
+    \PackageError{nerd101}
+    {highlighting a regex match outside of its environment}
+    {use \\begin{regexmatch}}
+}
+\newcommand{\dummyMatch}[2]{#2}
+\newcommand{\realMatch}[2]{%
+    \colorbox{#1}{%
+        \rule[-\matchDepth]{0pt}{\matchHeight+\matchDepth}%
+        #2%
+    }%
+}
+\let\match\invalidMatch
+\newcommand{\newmatch}[2]{%
+    \expandafter\newcommand\csname#1\endcsname[1]{%
+        \match{#2}{##1}%
+    }%
+}
+\NewEnviron{regexmatch}
+{
+    \let\match\dummyMatch
+    \setlength{\fboxsep}{1pt}
+    \settoheight{\matchHeight}{\hbox{\BODY}}
+    \settodepth{\matchDepth}{\hbox{\BODY}}
+    \let\match\realMatch
+    \BODY
+    \let\match\invalidMatch
+}
+
+% shortcut definitions
+\newmatch{matchA}{red}
+\newmatch{matchB}{DarkOrange}
+\newmatch{matchC}{Gold}
+\newmatch{matchD}{LightGoldenrod}
 \newcommand{\ra}{$\Rightarrow$\ }
 
 \usetheme{metropolis}
@@ -22,7 +63,6 @@
         \tableofcontents
     \end{frame}
 
-
     \section{Introduction}
         \begin{frame}{Motivation}
         \begin{columns}
@@ -30,7 +70,7 @@
                 \emph{Information is often represented as text}
                 \begin{itemize}
                     \item automation \ra 200 MB of email, one address
-                    \item representation \ra address is unknown
+                    \item representation \ra address matches a pattern
                     \item storage \ra email is not always accessible as files
                 \end{itemize}
                 \textbf{We need a standardized pattern language}
@@ -50,9 +90,8 @@
         \end{itemize}
     \end{frame}
 
-
     \section{Basic Syntax}
-    \begin{frame}{Literals}
+    \begin{frame}[fragile]{Literals}
         \begin{itemize}
             \item all characters (except metacharacters) are matching themselves
             \item metacharacters (\{\}[]()\textasciicircum\$.|*+?\textbackslash) can be escaped using \textbackslash
@@ -60,27 +99,29 @@
             \item some metacharacters match text too
         \end{itemize}
         \begin{center}
+            \renewcommand{\arraystretch}{1.5}
             \begin{tabular}{cl}
                 \toprule
-                Character & Pattern \\
+                Regular expression & Example \\
                 \midrule
-                . & any single character (sometimes excluding newlines) \\
-                \textasciicircum & start of the string or line (does not consume characters) \\
-                \$ & end of the string or line (does not consume characters) \\
+                \verb|a| & \begin{regexmatch}H\matchA{a}llo Welt \textbackslash\textasciicircum\textasciicircum/\end{regexmatch} \\
+                \verb|\^| & \begin{regexmatch}Hallo Welt \textbackslash\matchA{\textasciicircum}\matchB{\textasciicircum}/\end{regexmatch}  \\
+                \verb|\\| & \begin{regexmatch}Hallo Welt \matchA{\textbackslash}\textasciicircum\textasciicircum/\end{regexmatch}  \\
                 \bottomrule
             \end{tabular}
         \end{center}
     \end{frame}
 
-    \begin{frame}[fragile]{Literal examples}
+    \begin{frame}{Literal examples}
         \begin{center}
-            \begin{tabular}{cl}
+            \renewcommand{\arraystretch}{1.5}
+            \begin{tabular}{cll}
                 \toprule
-                Regular expression & Match \\
+                Regular expression & Pattern & Example \\
                 \midrule
-                \verb|a| & a \\
-                \verb|\.| & . \\
-                \verb|\\| & \textbackslash \\
+                . & any single character (sometimes excluding newlines) & \begin{regexmatch}\matchA{H}\matchB{i}\end{regexmatch} \\
+                \textasciicircum & start of the string or line (does not consume characters) & \begin{regexmatch}\matchA{ }Hi\end{regexmatch} \\
+                \$ & end of the string or line (does not consume characters) & \begin{regexmatch}Hi\matchA{ }\end{regexmatch} \\
                 \bottomrule
             \end{tabular}
         \end{center}
@@ -99,18 +140,18 @@
 
     \begin{frame}[fragile]{Group examples}
         \begin{center}
-            \begin{tabular}{cl}
+            \renewcommand{\arraystretch}{1.5}
+            \begin{tabular}{cll}
                 \toprule
-                Regular expression & Match \\
+                Regular expression & Pattern & Example \\
                 \midrule
-                \verb|[ab]| & a or b \\
-                \verb|[^ab]| & every single character except a or b \\
-                \verb|[ab^]| & a or b or \textasciicircum \\
-                \verb|[a.b]| & a or b or . \\
-                \verb|[a-z!.0-9?]| & any single lowercase letter, number or !?. \\
-                \verb|\d| & any match of \verb|[0-9]| \\
-                \verb|\s| & any whitespace \\
-                \verb|\w| & any match of \verb|[a-zA-Z0-9_]| \\
+                \verb|[ae]| & a or e & \begin{regexmatch}H\matchA{a}llo W\matchB{e}lt \textbackslash\textasciicircum\textasciicircum/\end{regexmatch} \\
+                \verb|[^ae]| & every single character except a or e & \begin{regexmatch}\matchA{D}a\matchB{t}e\matchC{n}\end{regexmatch} \\
+                \verb|[/^]| & / or \textasciicircum & \begin{regexmatch}\textbackslash\matchA{\textasciicircum}\matchB{\textasciicircum}\matchC{/}\end{regexmatch} \\
+                \verb|[a-z0-9]| & any single lowercase letter or number & \begin{regexmatch}E = \matchA{m}\matchB{c}\textasciicircum\matchC{2}\end{regexmatch} \\
+                \verb|\d| & any match of \verb|[0-9]| & \begin{regexmatch}E = mc\textasciicircum\matchA{2}\end{regexmatch} \\
+                \verb|\s| & any whitespace & \begin{regexmatch}E\matchA{ }=\matchB{ }mc\textasciicircum2\end{regexmatch} \\
+                \verb|\w| & any match of \verb|[a-zA-Z0-9_]| & \begin{regexmatch}\matchA{E} = \matchB{m}\matchC{c}\textasciicircum\matchD{2}\end{regexmatch} \\
                 \bottomrule
             \end{tabular}
         \end{center}
@@ -128,13 +169,14 @@
 
     \begin{frame}[fragile]{Concatenation examples}
         \begin{center}
-            \begin{tabular}{cl}
+            \renewcommand{\arraystretch}{1.5}
+            \begin{tabular}{cll}
                 \toprule
-                Regular expression & Match \\
+                Regular expression & Pattern & Example \\
                 \midrule
-                \verb|ab| & ab \\
-                \verb|a.b| & a<any single character>b \\
-                \verb|[1-9]\d| & any two digits not starting with zero \\
+                \verb|lo| & any l followed by o & \begin{regexmatch}Hal\matchA{lo} Welt \textbackslash\textasciicircum\textasciicircum/\end{regexmatch} \\
+                \verb|[^l]l| & any l not preceded by l & \begin{regexmatch}H\matchA{al}lo W\matchB{el}t \textbackslash\textasciicircum\textasciicircum/\end{regexmatch} \\
+                \verb|[1-9]\d| & any two digits not starting with zero & \begin{regexmatch}09 \matchA{19} \matchB{90}\end{regexmatch} \\
                 \bottomrule
             \end{tabular}
         \end{center}
@@ -144,19 +186,20 @@
         \begin{itemize}
             \item \ldots|\ldots{} is the Alternation of two regular expressions
             \item it matches text which is a match of one of the sub-expressions
-            \item be careful when concatenating: alternation has a higher precedence than concatenation!
+            \item be careful when concatenating: concatenation has a higher precedence than alternation!
         \end{itemize}
     \end{frame}
 
     \begin{frame}[fragile]{Alternation examples}
         \begin{center}
-            \begin{tabular}{cl}
+            \renewcommand{\arraystretch}{1.5}
+            \begin{tabular}{cll}
                 \toprule
-                Regular expression & Match \\
+                Regular expression & Pattern & Example \\
                 \midrule
-                \verb!a|bc!  & a or bc \\
-                \verb!(a|b)c! & ac or bc \\
-                \verb!a|bc|e! & a or bc or e \\
+                \verb!a|bc!  & a or bc & \begin{regexmatch}\matchA{a}b \matchB{a}c \matchC{bc} d\end{regexmatch} \\
+                \verb!(a|b)c! & ac or bc & \begin{regexmatch}ab \matchA{ac} \matchB{bc} d\end{regexmatch} \\
+                \verb!a|bc|d! & a or bc or d & \begin{regexmatch}\matchA{a}b \matchB{a}c \matchC{bc} \matchD{d}\end{regexmatch} \\
                 \bottomrule
             \end{tabular}
         \end{center}
@@ -186,12 +229,13 @@
 
     \begin{frame}[fragile]{Quantifier examples}
         \begin{center}
+            \renewcommand{\arraystretch}{1.5}
             \begin{tabular}{cl}
                 \toprule
-                Regular expression & Match \\
+                Regular expression & Pattern \\
                 \midrule
-                \verb!^(0|-?[1-9]\d*)!  & integers \\
-                \verb!^Home\ssweet(\sHome\ssweet)*\sHome$! & Home sweet \ldots{} Home \\
+                \verb!^(0|-?[1-9]\d*)$! & integers (as whole input) \\
+                \verb!Home\ssweet(\sHome\ssweet)*\sHome! & Home sweet \ldots{} Home \\
                 \verb!^\s*(#|$)! & beginning of non-code lines (Python) \\
                 \bottomrule
             \end{tabular}
