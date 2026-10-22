@@ -14,3 +14,4 @@
 *.blg
 *.run.xml
 *.xdv
+*/build
