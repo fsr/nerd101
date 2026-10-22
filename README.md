@@ -1,21 +1,26 @@
 # NERD101
 
+This repository contains the slides used for the Nerd101 event during the [ESE](https://ese.ifsr.de).
+
 ## Slides
-pdf builds of the slides are available here.
-### 2020
-* [SSH](https://users.ifsr.de/~krebs/ese20/nerd101-ssh.pdf)
-### 2019
-* [How to recover from chmod -x chmod](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-chmod.pdf)
-* [LaTeX](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-latex.pdf)
-* [Opening](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-opening.pdf)
-* [Python 3 Basics](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-python.pdf)
-* [SSH](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-ssh.pdf)
-* [Suckless](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-suckless.pdf)
-* [tmux](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-tmux.pdf)
-* [Windows Subsystem for Linux](https://users.ifsr.de/~krebs/ese19/nerd101/nerd101-wsl.pdf)
-### 2022
-* [Coffee101](/coffee101/coffee101-1.pdf)
+
+Prebuild PDF versions of the slides are available via releases, which happen every year during the ESE.
+
+### Building
+
+To build the slides yourself, run [`latexmk`](https://ctan.org/pkg/latexmk) (included in TeX Live) in the root of the repository.
+Just running `latexmk` will build all slides, with individual slides being build by running `latexmk <directory>/main.tex`.
+
+### Contributing
+
+When presenting new slides at the Nerd101 please make sure the slides build successfully and open a pull request BEFORE the ESE.
+
+Every presentation lives in a separate directory, with the main latex file (which will be build by latexmk) being called `main.tex`.
+Please include the [logo](./logo.png) and [color](./color.tex) of the current ESE from the root of the repository, to simplify
+changing them for the next year.
+
 ## License
+
 The Contents of this repository are licensed under the Creative Commons License CC-BY-SA-NC 4.0.
 
 ## Acknowledgements
