@@ -1,0 +1,149 @@
+\documentclass[10pt, graphics, aspectratio=169, table]{beamer}
+\usepackage{hyperref}
+\usepackage{qrcode}
+\usepackage[normalem]{ulem}
+\input{../color.tex}
+
+\usetheme{metropolis}
+\setbeamercolor{frametitle}{bg=ese}
+
+\title{Open Source Development}
+\author{Eric Wolf}
+\date{ESE \the\year{}}
+\institute{Nerd::101 - ESE - IFSR - TU Dresden}
+\titlegraphic{\hfill\includegraphics[height=2cm]{../logo}}
+
+\begin{document}
+    \maketitle
+
+    \begin{frame}{Outline}
+        \tableofcontents
+    \end{frame}
+
+    \section{Introduction}
+    \begin{frame}{What is Open Source?}
+        \begin{columns}
+            \column{0.7\textwidth}
+                \begin{itemize}
+                    \item practice of publishing software publicly alongside its source code
+                    \item central goals: allowing use, study, modification and distribution
+                    \item different implementations via software licenses
+                \end{itemize}
+            \column{0.3\textwidth}
+                \centering
+                \includegraphics[height=0.25\textheight]{img/firefox.png}
+                \center\tiny\url{https://www.firefox.com}
+                \includegraphics[width=\textwidth]{img/libreoffice.png}
+                \center\tiny\url{https://www.libreoffice.org}
+                \includegraphics[height=0.25\textheight]{img/notepadpp.png}
+                \center\tiny\url{https://notepad-plus-plus.org}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Why should you care?}
+        Open Source \dots
+        \begin{itemize}
+            \item \dots allows for easy collaborative development
+            \item \dots allows the community to take control if necessary (via forking)
+            \item \dots makes it hard to implement unwanted `features' or security backdoors
+        \end{itemize}
+
+        \textbf{Open Source software empowers its users: you!}
+    \end{frame}
+
+    \section{Commonly used licenses}
+    \begin{frame}{Permissive licenses}
+        \begin{columns}
+            \column{0.6\textwidth}
+                \begin{itemize}
+                    \item allow almost anything, including commercial use and relicensing
+                    \item require copies to include a copyright and permission notice
+                    \item do not provide any warranty or liability
+                    \item examples: MIT License and Apache License 2.0
+                \end{itemize}
+            \column{0.4\textwidth}
+                \includegraphics[width=\textwidth]{img/apache.png}
+                \center\tiny\href{https://commons.wikimedia.org/wiki/File:ASF_Logo.svg}{Apache Software Foundation Logo}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{The problem with permissive licenses}
+        \begin{itemize}
+            \item freedoms granted by permissive licenses do not have to be preserved
+            \item often summarized as use, study, share and improve
+            \item such software can be redistributed without granting them to its users
+            \item copyleft licenses ensure they are preserved by redistribution
+        \end{itemize}
+
+        \textbf{Copyleft licenses are sometimes referred to as `viral' licenses}
+    \end{frame}
+
+    \begin{frame}{Copyleft licenses}
+        \begin{columns}
+            \column{0.6\textwidth}
+                \begin{itemize}
+                    \item similar to permissive licenses, but more strict
+                    \item require the source code to be disclosed on distribution and the declaration of changes
+                    \item require modifications and larger works to be released under a compatible license
+                    \item examples: GNU General Public License and its variants
+                \end{itemize}
+            \column{0.4\textwidth}
+                \includegraphics[width=\textwidth]{img/GPL.png}
+                \center\tiny\href{https://commons.wikimedia.org/wiki/File:GPLv3_Logo.svg}{GNU General Public License Logo}
+        \end{columns}
+    \end{frame}
+
+    \section{Example: GitHub}
+    \begin{frame}{What is GitHub?}
+        \begin{columns}
+            \column{0.7\textwidth}
+            \begin{itemize}
+                \item platform for collaborative development using git
+                \item widely used in the open source community
+                \item includes issue trackers, website hosting, CI/CD, \dots
+                \item is not open source itself (proprietary)
+            \end{itemize}
+            \column{0.3\textwidth}
+                \includegraphics[width=\textwidth]{img/github.png}
+                \center\tiny\url{https://github.com}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Collaborative development on GitHub}
+        Contribute changes to another repository by \dots
+        \begin{enumerate}
+            \item copy the original repository by forking it
+            \item clone and push your changes to the forked repository
+            \item create a pull request to the original repository
+            \item wait for owner of original repository to accept the pull request
+        \end{enumerate}
+
+        \textbf{The actual process depends on the project you want to contribute to}
+    \end{frame}
+
+    \begin{frame}{Showtime}
+        \textbf{A little demonstration \dots}
+    \end{frame}
+
+    \section{What to do next}
+    \begin{frame}{What to do next}
+        \begin{columns}
+            \column{0.6\textwidth}
+                \begin{itemize}
+                    \item look into what open source software you are using (think about transitive dependencies)
+                    \item participate and be active in their communities
+                    \item support open source projects (via code, work or money)
+                \end{itemize}
+
+            \column{0.4\textwidth}
+                \centering
+                \includegraphics[height=0.75\textheight]{img/dependency.png}
+                \center\tiny\url{https://xkcd.com/2347}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Choose a license}
+        \center\qrcode[height=2in]{https://choosealicense.com}
+        \center\url{https://choosealicense.com}
+    \end{frame}
+\end{document}
